@@ -63,6 +63,7 @@ int main(int argc, char* argv[])
     init_chunk(&chunk);
     write_chunk(&chunk, OP_ADD);
     print_chunk(&chunk);
+    free_chunk(&chunk);
 
     return 0;
 

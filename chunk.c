@@ -1,5 +1,6 @@
 #include "chunk.h"
 #include "memory.h"
+#include "value.h"
 
 void init_chunk(Chunk* chunk)
 {
@@ -14,10 +15,11 @@ void write_chunk(Chunk* chunk, Word op)
 {
     if(chunk->len + 1 > chunk->capacity)
     {
-        chunk->len = GROW_SIZE(chunk->len);
-        chunk->codes = ALLOCATE(Word, &chunk->codes, chunk->len);
-        chunk->lines = ALLOCATE(int, &chunk->lines, chunk->len);
+        chunk->capacity = GROW_SIZE(chunk->capacity);
+        chunk->codes = ALLOCATE(Word, chunk->codes, chunk->capacity);
+        chunk->lines = ALLOCATE(int, chunk->lines, chunk->capacity);
     }
+    chunk->lines[chunk->len] = 0;
     chunk->codes[chunk->len++] = op;
 }
 

@@ -8,7 +8,7 @@ void* reallocate(void* ptr, size_t size)
         free(ptr);
         return NULL;
     }
-    void* result = realloc(NULL, size);
+    void* result = realloc(ptr, size);
     if(!result) 
     {
         perror("Error");

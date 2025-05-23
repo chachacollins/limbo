@@ -104,7 +104,8 @@ static TokenType check_keyword(int start, int len, const char* rest, TokenType t
 
 static TokenType identifier_type(void)
 {
-    switch (lexer.start[0]) {
+    switch (lexer.start[0]) 
+    {
         case 'a': return check_keyword(1, 2, "nd", TOK_AND);
         case 'c': return check_keyword(1, 4, "lass", TOK_CLASS);
         case 'e': return check_keyword(1, 3, "lse", TOK_ELSE);

@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "lexer.h"
-
+#include "chunk.h"
 
 char* readfile(const char* filename)
 {
@@ -13,25 +12,25 @@ char* readfile(const char* filename)
         exit(69);
     }
     fseek(file, 0, SEEK_END);
-    size_t size_of_file = ftell(file);
+    size_t file_size = ftell(file);
     rewind(file);
-    char* buffer = (char*) malloc(size_of_file + 1);
+    char* buffer = (char*) malloc(file_size + 1);
     if(!buffer)
     {
         perror("Error");
         fclose(file);
         exit(69);
     }
-    size_t num_of_readb = fread(buffer, sizeof(char), size_of_file, file);
-    if(num_of_readb != size_of_file)
+    size_t num_of_readb = fread(buffer, sizeof(char), file_size, file);
+    if(num_of_readb != file_size)
     {
         free(buffer);
         fclose(file);
         fprintf(stderr, "Error Could not read file. Expected %zu got %zu\n",
-                size_of_file, num_of_readb);
+                file_size, num_of_readb);
         exit(69);
     }
-    buffer[size_of_file] = '\0';
+    buffer[file_size] = '\0';
     fclose(file);
     return buffer;
 }
@@ -49,8 +48,24 @@ void repl(void)
     }
 }
 
+void print_chunk(Chunk *chunk)
+{
+    for(size_t i = 0; i < chunk->len; ++i)
+    {
+        printf("code -> %d\n", chunk->codes[i]);
+    }
+}
+
 int main(int argc, char* argv[])
 {
+
+    Chunk chunk;
+    init_chunk(&chunk);
+    write_chunk(&chunk, OP_ADD);
+    print_chunk(&chunk);
+
+    return 0;
+
     if(argc == 1) 
     {
         repl();
@@ -62,3 +77,4 @@ int main(int argc, char* argv[])
     }
     return 0;
 }
+

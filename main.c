@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "chunk.h"
+#include "vm.h"
 
 char* readfile(const char* filename)
 {
@@ -58,13 +59,24 @@ void print_chunk(Chunk *chunk)
 
 int main(int argc, char* argv[])
 {
-
+    init_vm();
     Chunk chunk;
     init_chunk(&chunk);
-    write_chunk(&chunk, OP_ADD);
-    print_chunk(&chunk);
-    free_chunk(&chunk);
 
+    write_chunk(&chunk, OP_CONSTANT);
+    int constant = add_constant(&chunk, 34);
+    write_chunk(&chunk, constant);
+
+    write_chunk(&chunk, OP_CONSTANT);
+    constant = add_constant(&chunk, 35);
+    write_chunk(&chunk, constant);
+
+    write_chunk(&chunk, OP_ADD);
+    write_chunk(&chunk, OP_RETURN);
+
+    interpret(&chunk);
+
+    free_vm();
     return 0;
 
     if(argc == 1) 

@@ -1,5 +1,5 @@
 CC="gcc"
-BUILD_FILE="main.c lexer.c memory.c chunk.c value.c"
+BUILD_FILE="main.c lexer.c memory.c chunk.c value.c vm.c"
 BUILD_FLAGS="-Wextra -Wall -Werror --pedantic -std=c23 -fanalyzer"
 
 set -xe

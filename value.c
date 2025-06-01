@@ -13,7 +13,7 @@ void add_value(ValueArray *v_arr, Value value)
     if(v_arr->len + 1 > v_arr->capacity)
     {
         v_arr->capacity = GROW_SIZE(v_arr->capacity);
-        v_arr->values = ALLOCATE(Value, v_arr->values, v_arr->len);
+        v_arr->values = ALLOCATE(Value, v_arr->values, v_arr->capacity);
     }
     v_arr->values[v_arr->len++] = value;
 }
